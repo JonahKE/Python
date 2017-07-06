@@ -8,12 +8,22 @@ class Car(object):
             self.tax = "15%"
         else:
             self.tax = "12%"
-        def display_all():
-            print "Price: " + str(self.price) 
-            print "Speed: " + str(self.speed)
-            print "Fuel: " + str(self.fuel)
-            print "Mileage: " + str(self.mileage)
-            print "Tax: " + str(self.tax)
-        display_all()
+        self.display_all()
+    def display_all(self):
+        print "Price: " + str(self.price) 
+        print "Speed: " + str(self.speed)
+        print "Fuel: " + str(self.fuel)
+        print "Mileage: " + str(self.mileage)
+        print "Tax: " + str(self.tax)
 one = Car(2000,"35mph","Full","15mpg")
 one
+two = Car(2000,"5mph","Not Full","105mpg")
+two
+three = Car(2000,"15mph","Kind of Full","95mpg")
+three
+four = Car(2000,"25mph","Full","25mpg")
+four
+five = Car(2000,"45mph","Empty","25mpg")
+five
+six = Car(20000000,"35mph","Empyty","15mpg")
+six
