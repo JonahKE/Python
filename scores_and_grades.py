@@ -1,6 +1,6 @@
 import random
 for x in range(10):
-    score = random.randint(60,100)
+    score = random.randint(60,101)
     if score >= 60 and score <=69:
         print "Score: {}; Your grade is D".format(score)
     elif score >= 70 and score <=79:
