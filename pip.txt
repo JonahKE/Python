@@ -1,0 +1,25 @@
+pip install Django:
+install third party modules
+
+pip list:
+Lists the installed packages including editables. Editables are basically in a staging area .
+
+pip install Django (We know you already ran this one. What information do you see returned in terminal after this command?):
+
+Requirement already satisfied: Django in /usr/local/lib/python2.7/site-packages
+Requirement already satisfied: pytz in /usr/local/lib/python2.7/site-packages (from Django)
+
+If you try to install something that is already installed it will tell you.
+
+pip freeze (What's the difference between freeze and list?)
+First cd into your Desktop directory (cd ~/Desktop), then run this command: pip freeze > requirements.txt. What do you see when you ls? What's inside this file?
+Outputs installed packages in the format that is required for installation. It does not show editables.
+
+pip uninstall Django
+Uninstalls third party modules
+
+pip show Django
+Displays information about Django including name, version, installed location, and requires
+
+pip search Flask. This one might take a moment to execute.
+Searches for packages whose name or summary contain the searched term.
