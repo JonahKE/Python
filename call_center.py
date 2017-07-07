@@ -1,51 +1,53 @@
 class Call(object):
     def __init__(self, caller_id, caller_name, caller_number, time, reason):
-        self.id = caller_id
-        self.caller_name = caller_name
-        self.caller_number = caller_number
-        self.time = time
-        self.reason = reason
-        self.call = {
-            "Caller ID": self.id,
-            "Caller Name": self.caller_name,
-            "Caller Number": self.caller_number,
-            "Call Time": self.time,
-            "Call Reason": self.reason
-        }
-        return self.call
+        self.call = [
+            caller_id,
+            caller_name,
+            caller_number,
+            time,
+            reason
+        ]
+    # display: prints all Call attributes.
     def display(self):
         print self.call
+
 class CallCenter(Call):
     def __init__(self):
         self.calls = []
-        self.queue_size = len(self.calls)
+        self.queue_size = 0
+    # add: adds a new call to the end of the call list
     def add(self, caller_id, caller_name, caller_number, time, reason):
         super(CallCenter, self).__init__(caller_id, caller_name, caller_number, time, reason)
         self.calls.append(self.call)
         self.queue_size += 1
         return self
+    # remove: removes the call from the beginning of the list (index 0)
     def remove(self):
         self.calls.pop(0)
+        self.queue_size -= 1
         return self
+    #info: prints the name and phone number for each call in the queue as well as the length of the queue
+    def info(self):
+        for i in self.calls:
+            print i[1], i[2]
+        print "Queue size: ", self.queue_size
+    # removePhone: find and remove a call from the queue according to the phone number of the caller
     def removePhone(self, phone_number):
-        for i in range(0, len(self.calls)):
-            if self.calls[i]["Caller Number"] == phone_number:
+        for i in range(self.queue_size-1):
+            if self.calls[i][2] == phone_number:
                 self.calls.pop(i)
                 self.queue_size -= 1
+                i -= 1
         return self
-    def sortByTime(self):
-        from operator import itemgetter
-        self.calls.sort(key=itemgetter('Caller ID'))
+    # sortQueue: sorts the calls in the queue according to time of call in ascending order
+    def sortQueue(self):
+        self.calls = sorted(self.calls, key=lambda x:x[3])
         return self
-    def info(self):
-        for i in range(0, len(self.calls)):
-            print "#" + str(i+1), self.calls[i]["Caller Name"], "-", self.calls[i]["Caller Number"]
-        print "Queue Size: " + str(self.queue_size)
+
 callcenter = CallCenter()
-callcenter.add(1,"Isaac","802-380-3564","04:57","blah blah")
-callcenter.add(4,"Helen","Helen's Number","5:57","IT struggles")
-callcenter.add(2,"Amanda","Amanda's Number","12:57","Python not working")
-callcenter.add(5,"Rob","Rob's Number","20:57","just sad")
-callcenter.add(3,"Isadsafac","089-asdf-3564","14:57","who knows")
-callcenter.removePhone("089-asdf-3564")
-callcenter.sortByTime().info()
+callcenter.add(1,"Isaac","802-380-3564","05:56","blah blah")
+callcenter.add(2,"Helen","Helen's Number","02:57","IT struggles")
+callcenter.add(3,"Amanda","Amanda's Number","12:57","Python not working")
+callcenter.add(4,"Rob","Rob's Number","01:57","just sad")
+callcenter.add(5,"Isadsafac","089-asdf-3564","10:57","who knows")
+callcenter.remove().removePhone("Rob's Number").sortQueue().info()
