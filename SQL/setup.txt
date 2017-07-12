@@ -1,0 +1,3 @@
+USE twitter;
+SELECT * FROM twitter;
+DELETE FROM twitter WHERE id = 2;
