@@ -48,11 +48,13 @@ span.header {
 .places input, button {
     background-color: darkgray;
     padding: 5px;
-    text-align: center;   
+    text-align: center;
 }
 #activities {
     width: 94%;
     min-width: 450px;
+    height: 300px;
+    overflow: auto;
     padding: 2%;
     margin: 1%;
     background-color: whitesmoke;

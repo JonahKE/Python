@@ -43,8 +43,12 @@
             <div id="activities">
                 <span class="subhead">Activities:</span>
                 <ul>
-                {% for x in session['activities'] %}
-                    <li>{{ x }}</li>
+                {% for x in session['activities']|reverse %}
+                  {% if x[:4] == 'Lost' %}
+                    <li style="color: red;">{{ x }}</li>
+                  {% else %}
+                    <li style="color: green;">{{ x }}</li>
+                  {% endif %}
                 {% endfor %}
                 </ul>
             </div>
