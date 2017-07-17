@@ -113,11 +113,11 @@ def newpost():
         return redirect("/wall")
     else:
         query = "INSERT INTO messages(user_id, message, created_at, updated_at) VALUES (:poster_id, :post, NOW(), NOW())"
-        data = {
+        messagedata = {
             'poster_id': session['id'],
             'post': request.form['post']
         }
-        mysql.query_db(query, data)
+        mysql.query_db(query, messagedata)
         return redirect('/wall')
 @app.route('/comment', methods=['POST'])
 def newcomment():
@@ -125,13 +125,14 @@ def newcomment():
         flash('Please enter a comment.', 'commment_error')
         return redirect('/wall')
     else:
-        query = "INSERT INTO comments(user_id, message_id, comment, created_at, updated_at) VALUES (:user_id, :post_id, :comment, NOW(), NOW())"
-        data = {
-            'user_id': session['id'],
-            'post_id': request.form['post_id'],
-            'comment': request.form['comment']
-        }
-        mysql.query_db(query, data)
+        if session and session['id']:
+            query = "INSERT INTO comments(user_id, message_id, comment, created_at, updated_at) VALUES (:user_id, :post_id, :comment, NOW(), NOW())"
+            data = {
+                'user_id': session['id'],
+                'post_id': request.form['post_id'],
+                'comment': request.form['comment']
+            }
+            mysql.query_db(query, data)
         return redirect('/wall')
 
 # Logout

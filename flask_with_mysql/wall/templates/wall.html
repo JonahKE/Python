@@ -3,32 +3,17 @@
   <head>
     <meta charset="utf-8">
     <title>The Wall</title>
-    <style type="text/css">
-    #header {
-      outline: 1px dashed blue;
-    }
-    #new_post {
-      outline: 1px dashed green;
-    }
-    #posts {
-      outline: 1px dashed red;
-    }
-    .thisisapost {
-      outline: 1px dashed purple;
-    }
-    .thisisacomment {
-      outline: 2px dotted orange;
-    }
-    </style>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
   </head>
   <body>
     <div id="wrapper">
       <div id="header">
-        Welcome {{ session['first_name'] }}! <a href="/logout">Logout</a>
+        <span class="welcome">Welcome {{ session['first_name'] }}!</span>
+        <a href="/logout">Logout</a>
       </div>
       <div id="new_post">
         <form action='/newpost' method='post'>
-          <h1>Post a message</h1></br>
+          <h1>Post a new message</h1></br>
           {% with messages = get_flashed_messages() %}
             {% if messages %}
               <ul>
@@ -38,32 +23,36 @@
               </ul>
             {% endif %}
           {% endwith %}
-          <textarea name="post" style="width: 400px; height: 100px;"></textarea><br>
-          <input type="submit" value="Post a message">
+          <textarea name="post"></textarea><br>
+          <input type="submit" value="Post">
         </form>
       </div>
       <div id="posts">
         {% if posts %}
           <h1>Posts</h1>
           {% for post in posts | reverse %}
-            <i>{{ post['first_name'] }} {{ post['last_name'] }} {{ post['created_at'] }}</i>
-            <div class="thisisapost">{{ post['message'] }}</div>
-            {% if comments %}
-              {% for comment in comments %}
-                {% if comment['message_id'] == post['id'] %}
-                  <div class="thisisacomment">
-                    {{ comment['first_name'] }} {{ comment['last_name'] }} {{ comment['created_at'] }}:
-                    <p>{{ comment['comment'] }}</p>
-                  </div>
-                {% endif %}
-              {% endfor %}
-            {% endif %}
-            <form action='/comment' method='post'>
-              <input type="hidden" name="post_id" value="{{ post['id'] }}">
-              <h2>Post a comment</h2>
-              <textarea name="comment" style="width: 400px; height: 50px;"></textarea></br>
-              <input type="submit" value="Post a comment">
-            </form>
+            <div class="thisisapost">
+              <i>{{ post['first_name'] }} {{ post['last_name'] }} {{ post['created_at'] }}</i>
+              <p>{{ post['message'] }}</p>
+              </div>
+              {% if comments %}
+                {% for comment in comments %}
+                  {% if comment['message_id'] == post['id'] %}
+                    <div class="thisisacomment">
+                      {{ comment['first_name'] }} {{ comment['last_name'] }} {{ comment['created_at'] }}:
+                      <p>{{ comment['comment'] }}</p>
+                    </div>
+                  {% endif %}
+                {% endfor %}
+              {% endif %}
+            <div class="postacomment"
+              <form action='/comment' method='post'>
+                <input type="hidden" name="post_id" value="{{ post['id'] }}">
+                <h2>Post a comment</h2>
+                <textarea name="comment" style="width: 400px; height: 50px;"></textarea></br>
+                <input type="submit" value="Post a comment">
+              </form>
+            </div>
           {% endfor %}
         {% endif %}
       </div>
