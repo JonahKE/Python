@@ -1,12 +1,8 @@
 from django.shortcuts import render, HttpResponse, redirect
-from django.contrib import messages
-from .models import User
-from datetime import datetime
-import bcrypt
 
 # Create your views here.
 def index(request):
-    return render(request, 'login_app/index.html')
+    return render(request, 'users/index.html')
 def register(request):
     errors = User.objects.validation(request.POST)
     if len(errors) > 0:
@@ -17,7 +13,7 @@ def register(request):
         pwhash = bcrypt.hashpw(request.POST['password'].encode(), bcrypt.gensalt())
         User.objects.create(first_name=request.POST['first_name'], last_name=request.POST['last_name'], email=request.POST['email'], password=pwhash)
         request.session['first_name'] = request.POST['first_name']
-        return redirect('/success')
+        return redirect('/dashboard')
 def signin(request):
     errors = User.objects.login_validation(request.POST)
     if len(errors) > 0:
@@ -26,10 +22,7 @@ def signin(request):
         return redirect('/')
     else:
         request.session['first_name'] = User.objects.get(email=request.POST['email']).first_name
-        return redirect('/success')
-
-def success(request):
-    return render(request, 'login_app/success.html')
+        return redirect('/dashboard')
 
 def logout(request):
     request.session.clear()
